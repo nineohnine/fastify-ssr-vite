@@ -1,0 +1,29 @@
+{
+  "name": "fastify-ssr-vite",
+  "version": "0.0.1",
+  "description": "fastify plugin for ssr with vite",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint ."
+  },
+  "author": "nineohnine",
+  "license": "ISC",
+  "dependencies": {
+    "fastify-plugin": "^3.0.1",
+    "middie": "^6.1.0"
+  },
+  "peerDependencies": {
+    "vite": "^2.9.x"
+  },
+  "devDependencies": {
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "jest": "^28.1.0",
+    "prettier": "2.6.2"
+  }
+}
