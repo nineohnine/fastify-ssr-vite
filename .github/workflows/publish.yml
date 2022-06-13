@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: "16.x"
           registry-url: "https://registry.npmjs.org"
-      - run: npm run install
+      - run: npm install
       - run: npm run build
       - run: npm publish --tag ${{ github.event.release.tag_name }}
         env:
