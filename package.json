@@ -4,6 +4,7 @@
   "description": "fastify plugin for ssr with vite",
   "main": "index.js",
   "scripts": {
+    "build": "npm run lint && npm test",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint ."
