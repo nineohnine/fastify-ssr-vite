@@ -2,7 +2,7 @@ const path = require("path");
 const fp = require("fastify-plugin");
 const vite = require("vite");
 const middie = require("middie");
-const ssrFactory = require("./ssr/factory");
+const ssrFactory = require("./ssr");
 
 const { createServer } = vite;
 
@@ -41,13 +41,14 @@ async function ssr(fastify, opts, done) {
     render = returnRender(renderMod);
   }
 
-  const ssrHandler = await ssrFactory(
+  const ssrDecorator = await ssrFactory(
     render,
     template,
     populateTemplate,
     viteServer
   );
-  fastify.get("**", ssrHandler);
+
+  fastify.decorateReply("ssr", ssrDecorator);
 
   done();
 }

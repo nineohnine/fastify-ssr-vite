@@ -22,7 +22,7 @@ jest.mock("path", () => ({
 describe("./index.js", () => {
   beforeEach(() => {
     fastifyInstance = {
-      get: jest.fn(),
+      decorateReply: jest.fn(),
       register: jest.fn(),
       use: jest.fn(),
     };
@@ -70,9 +70,9 @@ describe("./index.js", () => {
         expect(vite.createServer).not.toHaveBeenCalled();
       });
 
-      it("then it should register ssrHandler", () => {
-        const expected = ["**", expect.any(Function)];
-        expect(fastifyInstance.get).toHaveBeenCalledWith(...expected);
+      it("then it should call decorateReply", () => {
+        const expected = ["ssr", expect.any(Function)];
+        expect(fastifyInstance.decorateReply).toHaveBeenCalledWith(...expected);
       });
 
       it("then done should be called", () => {
@@ -107,8 +107,8 @@ describe("./index.js", () => {
     });
 
     it("then it should register ssrHandler", () => {
-      const expected = ["**", expect.any(Function)];
-      expect(fastifyInstance.get).toHaveBeenCalledWith(...expected);
+      const expected = ["ssr", expect.any(Function)];
+      expect(fastifyInstance.decorateReply).toHaveBeenCalledWith(...expected);
     });
 
     it("then done should be called", () => {
@@ -132,10 +132,11 @@ describe("./index.js", () => {
     });
   });
 
-  describe("When ssrHandler is called", () => {
-    let ssrHandler;
+  describe("When ssrDecorator is called", () => {
+    let ssrDecorator;
     let mockReq;
     let mockReply;
+    let response;
     const url = "/this/is/a/url";
     beforeEach(() => {
       mockReq = {
@@ -153,6 +154,7 @@ describe("./index.js", () => {
         send(response) {
           this._res = response;
         },
+        request: mockReq,
       };
     });
     describe("and when production option is set", () => {
@@ -166,11 +168,26 @@ describe("./index.js", () => {
         testOptions.readTemplate.mockReturnValue("template");
         testOptions.populateTemplate.mockReturnValue("populated template");
 
-        fastifyInstance.get = (...args) => {
-          [, ssrHandler] = args;
+        fastifyInstance.decorateReply = (...args) => {
+          [, ssrDecorator] = args;
         };
         await ssrPlugin(fastifyInstance, testOptions, done);
-        await ssrHandler(mockReq, mockReply);
+        ssrDecorator = ssrDecorator.bind(mockReply);
+        await ssrDecorator();
+      });
+
+      describe("and when send parameter is set to false", () => {
+        beforeEach(async () => {
+          await ssrPlugin(fastifyInstance, testOptions, done);
+          ssrDecorator = ssrDecorator.bind(mockReply);
+          mockReply._res = null;
+          mockReply._type = null;
+          response = await ssrDecorator(false);
+        });
+
+        it("then it should not call send", () => {
+          expect(mockReply._res).toBe(null);
+        });
       });
 
       it("then it should call user provided populateTemplate with correct arguments", () => {
@@ -198,11 +215,26 @@ describe("./index.js", () => {
         testOptions.readTemplate.mockReturnValue("template");
         testOptions.populateTemplate.mockResolvedValue("populated template");
         mockViteServer.transformIndexHtml.mockResolvedValue("vite template");
-        fastifyInstance.get = (...args) => {
-          [, ssrHandler] = args;
+        fastifyInstance.decorateReply = (...args) => {
+          [, ssrDecorator] = args;
         };
         await ssrPlugin(fastifyInstance, testOptions, done);
-        await ssrHandler(mockReq, mockReply);
+        ssrDecorator = ssrDecorator.bind(mockReply);
+        await ssrDecorator();
+      });
+
+      describe("and when send parameter is set to false", () => {
+        beforeEach(async () => {
+          await ssrPlugin(fastifyInstance, testOptions, done);
+          ssrDecorator = ssrDecorator.bind(mockReply);
+          mockReply._res = null;
+          mockReply._type = null;
+          response = await ssrDecorator(false);
+        });
+
+        it("then it should not call send", () => {
+          expect(mockReply._res).toBe(null);
+        });
       });
 
       it("then it should call vite's transformIndexHtml", () => {

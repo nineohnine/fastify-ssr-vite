@@ -26,5 +26,10 @@
     "eslint-plugin-jest": "^26.5.3",
     "jest": "^28.1.0",
     "prettier": "2.6.2"
-  }
+  },
+  "keywords": [
+    "fastify",
+    "vite",
+    "ssr"
+  ]
 }
