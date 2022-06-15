@@ -12,8 +12,8 @@
   "author": "nineohnine",
   "license": "ISC",
   "dependencies": {
-    "fastify-plugin": "^3.0.1",
-    "middie": "^6.1.0"
+    "@fastify/middie": "^8.0.0",
+    "fastify-plugin": "^3.0.1"
   },
   "peerDependencies": {
     "vite": "^2.9.x"

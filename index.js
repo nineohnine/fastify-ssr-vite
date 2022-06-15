@@ -1,7 +1,7 @@
 const path = require("path");
 const fp = require("fastify-plugin");
 const vite = require("vite");
-const middie = require("middie");
+const middie = require("@fastify/middie");
 const ssrFactory = require("./ssr");
 
 const { createServer } = vite;

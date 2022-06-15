@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const vite = require("vite");
 const path = require("path");
-const middie = require("middie");
+const middie = require("@fastify/middie");
 
 const ssrPlugin = require("../index");
 
