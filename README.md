@@ -10,17 +10,7 @@ For information about configuring vite please see [vite's documentation](https:/
 
 When called the function will render your application using your supplied configuration to read and populate your template.
 
-The decorator can be used to automatically `send` your response, like so:
-
-```js
-app.get("/", async (req, reply) => {
-  await reply.ssr();
-});
-```
-
-> note: the decorator will also set response type to "text/html"
-
-Or for more granular control you may optionally toggle of this behavior by passing a `false` value as it's only parameter like so:
+By default the decorator will not automatically send your response:
 
 ```js
 app.get("/", async (req, reply) => {
@@ -30,6 +20,16 @@ app.get("/", async (req, reply) => {
   reply.type("text/html").send(resp);
 });
 ```
+
+You can enable this behavior by passing a `true` value as it's only parameter like so:
+
+```js
+app.get("/", async (req, reply) => {
+  await reply.ssr(true);
+});
+```
+
+> note: the decorator will also set response type to "text/html"
 
 ## Usage
 

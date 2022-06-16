@@ -181,11 +181,11 @@ describe("./index.js", () => {
           ssrDecorator = ssrDecorator.bind(mockReply);
           mockReply._res = null;
           mockReply._type = null;
-          await ssrDecorator(false);
+          await ssrDecorator(true);
         });
 
         it("then it should not call send", () => {
-          expect(mockReply._res).toBe(null);
+          expect(mockReply._res).toBe("populated template");
         });
       });
 
@@ -200,7 +200,7 @@ describe("./index.js", () => {
         expect(mockReply._type).toBe("text/html");
       });
       it("reply.send with populated template", () => {
-        expect(mockReply._res).toBe("populated template");
+        expect(mockReply._res).toBe(null);
       });
     });
     describe("and when production option is false", () => {
@@ -222,17 +222,17 @@ describe("./index.js", () => {
         await ssrDecorator();
       });
 
-      describe("and when send parameter is set to false", () => {
+      describe("and when send parameter is set to true", () => {
         beforeEach(async () => {
           await ssrPlugin(fastifyInstance, testOptions, done);
           ssrDecorator = ssrDecorator.bind(mockReply);
           mockReply._res = null;
           mockReply._type = null;
-          await ssrDecorator(false);
+          await ssrDecorator(true);
         });
 
         it("then it should not call send", () => {
-          expect(mockReply._res).toBe(null);
+          expect(mockReply._res).toBe("populated template");
         });
       });
 
@@ -254,7 +254,7 @@ describe("./index.js", () => {
         expect(mockReply._type).toBe("text/html");
       });
       it("reply.send with populated template", () => {
-        expect(mockReply._res).toBe("populated template");
+        expect(mockReply._res).toBe(null);
       });
     });
   });

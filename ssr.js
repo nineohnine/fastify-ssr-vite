@@ -1,7 +1,7 @@
 const ssrFactory = async (render, template, populateTemplate, vite) => {
   let ssrDecorator;
   if (vite) {
-    ssrDecorator = async function ssr(send = true) {
+    ssrDecorator = async function ssr(send = false) {
       const viteTemplate = await vite.transformIndexHtml(
         this.request.raw.url,
         template
@@ -19,7 +19,7 @@ const ssrFactory = async (render, template, populateTemplate, vite) => {
       return response;
     };
   } else {
-    ssrDecorator = async function ssr(send = true) {
+    ssrDecorator = async function ssr(send = false) {
       const response = await populateTemplate(
         template,
         render,
