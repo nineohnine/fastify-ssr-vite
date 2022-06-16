@@ -15,7 +15,7 @@ By default the decorator will not automatically send your response:
 ```js
 app.get("/", async (req, reply) => {
   // some pre rendering logic
-  const resp = await reply.ssr(false);
+  const resp = await reply.ssr();
   // do some stuff with response after render
   reply.type("text/html").send(resp);
 });
