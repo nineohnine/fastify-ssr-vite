@@ -136,7 +136,6 @@ describe("./index.js", () => {
     let ssrDecorator;
     let mockReq;
     let mockReply;
-    let response;
     const url = "/this/is/a/url";
     beforeEach(() => {
       mockReq = {
@@ -182,7 +181,7 @@ describe("./index.js", () => {
           ssrDecorator = ssrDecorator.bind(mockReply);
           mockReply._res = null;
           mockReply._type = null;
-          response = await ssrDecorator(false);
+          await ssrDecorator(false);
         });
 
         it("then it should not call send", () => {
@@ -229,7 +228,7 @@ describe("./index.js", () => {
           ssrDecorator = ssrDecorator.bind(mockReply);
           mockReply._res = null;
           mockReply._type = null;
-          response = await ssrDecorator(false);
+          await ssrDecorator(false);
         });
 
         it("then it should not call send", () => {
