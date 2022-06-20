@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "author": "nineohnine",
+  "repository": "github:nineohnine/fastify-ssr-vite"
   "license": "ISC",
   "dependencies": {
     "@fastify/middie": "^8.0.0",
